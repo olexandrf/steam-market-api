@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"context"
@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	maxErrorBody   = 1 << 10
-	defaultTimeout = 5 * time.Second
+	MaxErrorBody   = 1 << 10 // 1024
+	DefaultTimeout = 5 * time.Second
 )
 
 var ErrClientNil = errors.New("client is nil")
@@ -59,7 +59,7 @@ func DoRequest(ctx context.Context, client *http.Client, rawURL string) ([]byte,
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(io.LimitReader(resp.Body, maxErrorBody))
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, MaxErrorBody))
 		return nil, &APIError{StatusCode: resp.StatusCode, Message: string(body)}
 	}
 

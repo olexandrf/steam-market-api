@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"context"
@@ -10,6 +10,9 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/olexandrf/steam-market-web-api/steam/market"
+	"github.com/olexandrf/steam-market-web-api/steam/web"
 )
 
 func TestBuildURL(t *testing.T) {
@@ -23,35 +26,35 @@ func TestBuildURL(t *testing.T) {
 	}{
 		{
 			name:     "build steam web api news url",
-			base:     SteamURL,
-			apiPath:  SteamNewsURL,
+			base:     web.SteamURL,
+			apiPath:  web.SteamNewsURL,
 			params:   url.Values{},
-			expected: SteamURL + SteamNewsURL,
+			expected: web.SteamURL + web.SteamNewsURL,
 		},
 		{
 			name:    "build steam web api achievements url",
-			base:    SteamURL,
-			apiPath: SteamAchievementsURL,
+			base:    web.SteamURL,
+			apiPath: web.SteamAchievementsURL,
 			params: url.Values{
-				"appid": {CS2ID},
+				"appid": {web.CS2ID},
 			},
-			expected: SteamURL + SteamAchievementsURL + appIdParam + CS2ID,
+			expected: web.SteamURL + web.SteamAchievementsURL + appIdParam + web.CS2ID,
 		},
 		{
 			name:    "build steam market api prices url",
-			base:    SteamMarketURL,
-			apiPath: SteamPriceURL,
+			base:    market.SteamMarketURL,
+			apiPath: market.SteamPriceURL,
 			params: url.Values{
-				"appid": {CS2ID},
+				"appid": {web.CS2ID},
 			},
-			expected: SteamMarketURL + SteamPriceURL + appIdParam + CS2ID,
+			expected: market.SteamMarketURL + market.SteamPriceURL + appIdParam + web.CS2ID,
 		},
 		{
 			name:     "build steam market api listings url",
-			base:     SteamMarketURL,
-			apiPath:  SteamMarketListURL,
+			base:     market.SteamMarketURL,
+			apiPath:  market.SteamMarketListURL,
 			params:   url.Values{},
-			expected: SteamMarketURL + SteamMarketListURL,
+			expected: market.SteamMarketURL + market.SteamMarketListURL,
 		},
 		{
 			name:    "base URL with API path and query parameters",

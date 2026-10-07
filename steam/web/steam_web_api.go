@@ -1,4 +1,4 @@
-package main
+package web
 
 import (
 	"context"
@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/olexandrf/steam-market-web-api/steam/util"
 )
 
 const (
@@ -23,7 +25,7 @@ type SteamWebAPIClient struct {
 
 func NewSteamWebAPIClient(client *http.Client, url string) *SteamWebAPIClient {
 	if client == nil {
-		client = &http.Client{Timeout: defaultTimeout}
+		client = &http.Client{Timeout: util.DefaultTimeout}
 	}
 
 	return &SteamWebAPIClient{c: client, url: url}
@@ -74,12 +76,12 @@ func (s *SteamWebAPIClient) GetNews(ctx context.Context, appid string, count int
 	params.Set("format", format)
 	params.Set("count", strconv.Itoa(count))
 
-	reqURL, err := BuildURL(s.url, SteamNewsURL, params)
+	reqURL, err := util.BuildURL(s.url, SteamNewsURL, params)
 	if err != nil {
 		return nil, fmt.Errorf("get news: %w", err)
 	}
 
-	news, err := DoJSON[SteamNews](ctx, s.c, reqURL)
+	news, err := util.DoJSON[SteamNews](ctx, s.c, reqURL)
 	if err != nil {
 		return nil, fmt.Errorf("get news: %w", err)
 	}
@@ -94,12 +96,12 @@ func (s *SteamWebAPIClient) GetGlobalAchievementsPercentages(ctx context.Context
 	params.Set("gameid", gameId)
 	params.Set("format", format)
 
-	reqURL, err := BuildURL(s.url, SteamAchievementsURL, params)
+	reqURL, err := util.BuildURL(s.url, SteamAchievementsURL, params)
 	if err != nil {
 		return nil, fmt.Errorf("get global achievements: %w", err)
 	}
 
-	achievements, err := DoJSON[SteamAchievements](ctx, s.c, reqURL)
+	achievements, err := util.DoJSON[SteamAchievements](ctx, s.c, reqURL)
 	if err != nil {
 		return nil, fmt.Errorf("get global achievements: %w", err)
 	}

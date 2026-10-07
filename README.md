@@ -5,7 +5,7 @@ steam-market-web-api is a simple go project. It is a small package that provides
 ## Installation
 
 ```bash
-go get github.com/olexandrf/steam-market-web-api
+go get github.com/olexandrf/steam-market-web-steam
 ```
 
 ## Features
@@ -14,7 +14,7 @@ go get github.com/olexandrf/steam-market-web-api
 
 ```go
 // import package 
-import "github.com/olexandrf/steam-market-web-api"
+import "github.com/olexandrf/steam-market-web-steam"
 ```
 
 ## Contributing
