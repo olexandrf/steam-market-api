@@ -57,7 +57,7 @@ type ResultItem struct {
 	SalePriceText    string           `json:"sale_price_text"`
 }
 
-type MarketList struct {
+type ItemsList struct {
 	Success    bool         `json:"success"`
 	Start      int          `json:"start"`
 	PageSize   int          `json:"pagesize"`
@@ -80,7 +80,7 @@ func NewSteamMarketClient(httpClient *http.Client, url string) *SteamMarketClien
 	return &SteamMarketClient{Client: httpClient, url: url}
 }
 
-func (s *SteamMarketClient) GetMarketList(ctx context.Context, appid string) (*MarketList, error) {
+func (s *SteamMarketClient) GetMarketList(ctx context.Context, appid string) (*ItemsList, error) {
 	if err := ctx.Err(); err != nil {
 		return nil, fmt.Errorf("context error: %w", err)
 	}
@@ -93,7 +93,7 @@ func (s *SteamMarketClient) GetMarketList(ctx context.Context, appid string) (*M
 		return nil, fmt.Errorf("get market list: %w", err)
 	}
 
-	result, err := util.DoJSON[MarketList](ctx, s.Client, reqURL)
+	result, err := util.DoJSON[ItemsList](ctx, s.Client, reqURL)
 	if err != nil {
 		return nil, fmt.Errorf("get market list: %w", err)
 	}
