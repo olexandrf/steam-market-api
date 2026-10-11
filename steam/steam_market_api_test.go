@@ -1,4 +1,4 @@
-package market
+package steam
 
 import (
 	"context"
@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/olexandrf/steam-market-web-api/steam/web"
 )
 
 func TestSteamMarketClient_GetPrices(t *testing.T) {
@@ -23,9 +21,9 @@ func TestSteamMarketClient_GetPrices(t *testing.T) {
 
 	defer srv.Close()
 	currency := "1"
-	price, err := NewSteamMarketClient(srv.Client(), srv.URL).GetPrices(context.Background(), web.CS2ID, currency, "test_hash_name")
+	price, err := NewMarketClient(srv.Client(), srv.URL).GetPrices(context.Background(), CS2ID, currency, "test_hash_name")
 	if gotURL != "/priceoverview"+"?appid=730&currency=1&market_hash_name=test_hash_name" {
-		t.Fatalf("GetPrices: got URL %s, want %s", gotURL, SteamPriceURL)
+		t.Fatalf("GetPrices: got URL %s, want %s", gotURL, PriceURL)
 	}
 	if gotAccept != "application/json" {
 		t.Fatalf("GetPrices: got Accept %s, want %s", gotAccept, "application/json")

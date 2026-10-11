@@ -1,9 +1,8 @@
-package util
+package steam
 
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -16,21 +15,7 @@ const (
 	DefaultTimeout = 5 * time.Second
 )
 
-var ErrClientNil = errors.New("client is nil")
-
-type APIError struct {
-	StatusCode int
-	Message    string
-}
-
-func (e *APIError) Error() string {
-	if e.Message == "" {
-		return fmt.Sprintf("http %d", e.StatusCode)
-	}
-	return fmt.Sprintf("http %d: %s", e.StatusCode, e.Message)
-}
-
-func BuildURL(base string, apiPath string, params url.Values) (string, error) {
+func buildURL(base string, apiPath string, params url.Values) (string, error) {
 	u, err := url.Parse(base)
 	if err != nil {
 		return "", fmt.Errorf("parse url: %w", err)
@@ -42,7 +27,7 @@ func BuildURL(base string, apiPath string, params url.Values) (string, error) {
 	return u.String(), nil
 }
 
-func DoRequest(ctx context.Context, client *http.Client, rawURL string) ([]byte, error) {
+func doRequest(ctx context.Context, client *http.Client, rawURL string) ([]byte, error) {
 	if client == nil {
 		return nil, ErrClientNil
 	}
@@ -66,8 +51,8 @@ func DoRequest(ctx context.Context, client *http.Client, rawURL string) ([]byte,
 	return io.ReadAll(resp.Body)
 }
 
-func DoJSON[T any](ctx context.Context, client *http.Client, rawURL string) (*T, error) {
-	respBody, err := DoRequest(ctx, client, rawURL)
+func doJSON[T any](ctx context.Context, client *http.Client, rawURL string) (*T, error) {
+	respBody, err := doRequest(ctx, client, rawURL)
 	if err != nil {
 		return nil, err
 	}

@@ -1,6 +1,6 @@
-# steam-market-web-api
+# steam-market-api
 
-steam-market-web-api is a simple go project. It is a small package that provides [Steam Web API](https://steamcommunity.com/dev) client and Steam Market API client. It is fully covered by unit tests.
+steam-market-api is a simple go project. It is a small package that provides Steam Market API client.
 
 ## Installation
 

@@ -1,22 +1,20 @@
-package market
+package steam
 
 import (
 	"context"
 	"fmt"
 	"net/http"
 	"net/url"
-
-	"github.com/olexandrf/steam-market-web-api/steam/util"
 )
 
 const (
-	SteamMarketURL     = "https://steamcommunity.com/market"
-	SteamMarketListURL = "/search/render"
-	SteamPriceURL      = "/priceoverview"
-	noRender           = "1"
+	MarketURL     = "https://steamcommunity.com/market"
+	MarketListURL = "/search/render"
+	PriceURL      = "/priceoverview"
+	noRender      = "1"
 )
 
-type SteamMarketClient struct {
+type MarketClient struct {
 	Client *http.Client
 	url    string
 }
@@ -73,27 +71,24 @@ type PriceOverview struct {
 	MedianPrice string `json:"median_price"`
 }
 
-func NewSteamMarketClient(httpClient *http.Client, url string) *SteamMarketClient {
+func NewMarketClient(httpClient *http.Client, url string) *MarketClient {
 	if httpClient == nil {
-		httpClient = &http.Client{Timeout: util.DefaultTimeout}
+		httpClient = &http.Client{Timeout: DefaultTimeout}
 	}
-	return &SteamMarketClient{Client: httpClient, url: url}
+	return &MarketClient{Client: httpClient, url: url}
 }
 
-func (s *SteamMarketClient) GetMarketList(ctx context.Context, appid string) (*ItemsList, error) {
-	if err := ctx.Err(); err != nil {
-		return nil, fmt.Errorf("context error: %w", err)
-	}
+func (s *MarketClient) GetMarketList(ctx context.Context, appid string) (*ItemsList, error) {
 	params := url.Values{}
 	params.Set("norender", noRender)
 	params.Set("appid", appid)
 
-	reqURL, err := util.BuildURL(s.url, SteamMarketListURL, params)
+	reqURL, err := buildURL(s.url, MarketListURL, params)
 	if err != nil {
 		return nil, fmt.Errorf("get market list: %w", err)
 	}
 
-	result, err := util.DoJSON[ItemsList](ctx, s.Client, reqURL)
+	result, err := doJSON[ItemsList](ctx, s.Client, reqURL)
 	if err != nil {
 		return nil, fmt.Errorf("get market list: %w", err)
 	}
@@ -104,21 +99,18 @@ func (s *SteamMarketClient) GetMarketList(ctx context.Context, appid string) (*I
 	return result, nil
 }
 
-func (s *SteamMarketClient) GetPrices(ctx context.Context, appid string, currency string, marketHashName string) (*PriceOverview, error) {
-	if err := ctx.Err(); err != nil {
-		return nil, fmt.Errorf("context error: %w", err)
-	}
+func (s *MarketClient) GetPrices(ctx context.Context, appid string, currency string, marketHashName string) (*PriceOverview, error) {
 	params := url.Values{}
 	params.Set("appid", appid)
 	params.Set("currency", currency)
 	params.Set("market_hash_name", marketHashName)
 
-	reqURL, err := util.BuildURL(s.url, SteamPriceURL, params)
+	reqURL, err := buildURL(s.url, PriceURL, params)
 	if err != nil {
 		return nil, fmt.Errorf("get prices: %w", err)
 	}
 
-	price, err := util.DoJSON[PriceOverview](ctx, s.Client, reqURL)
+	price, err := doJSON[PriceOverview](ctx, s.Client, reqURL)
 
 	if err != nil {
 		return nil, fmt.Errorf("get prices: %w", err)
