@@ -56,7 +56,7 @@ func DoRequest(ctx context.Context, client *http.Client, rawURL string) ([]byte,
 	if err != nil {
 		return nil, fmt.Errorf("do request: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(io.LimitReader(resp.Body, MaxErrorBody))
