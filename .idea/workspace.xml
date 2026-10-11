@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e521c051-5cfb-4001-846d-b7bb7dd1904f" name="Changes" comment="error handle;" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="README" />
+        <option value="Markdown File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;olexandrf&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/olexandrf/steam-market-web-api.git&quot;,
+    &quot;accountId&quot;: &quot;557506f6-a61d-40bb-ac45-52817f3c8cc0&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.5612669649396262" />
+      <entry key="MS500" value="4.405315765877502" />
+      <entry key="S2" value="7.291838781961906" />
+      <entry key="S5" value="8.2504564196474" />
+      <entry key="S10" value="8.613056015749358" />
+      <entry key="S30" value="8.86819937844734" />
+      <entry key="S60" value="8.933740076629046" />
+      <entry key="M2" value="8.968160846200284" />
+      <entry key="M5" value="9.489669247468978" />
+      <entry key="M10" value="13.237705883538231" />
+      <entry key="M15" value="17.93976671235335" />
+      <entry key="M30" value="28.41668394527684" />
+      <entry key="H1" value="38.04678514611916" />
+      <entry key="H2" value="44.689621581755006" />
+      <entry key="H4" value="48.61195156067158" />
+      <entry key="D1" value="65.57388620582493" />
+      <entry key="W1" value="394.44714323794705" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="5.61373195486772E-167" />
+      <entry key="M15" value="1.4661141367146555E-111" />
+      <entry key="M30" value="3.8289869896810255E-56" />
+      <entry key="H1" value="1.956779786615245E-28" />
+      <entry key="H2" value="1.3992298996605929E-14" />
+      <entry key="H4" value="1.2218273271622314E-7" />
+      <entry key="D1" value="0.37680690773911507" />
+      <entry key="W1" value="12.892212913504169" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.5093084797195744" />
+      <entry key="MS500" value="4.3463039248804165" />
+      <entry key="S2" value="7.26409311415322" />
+      <entry key="S5" value="8.237714317984489" />
+      <entry key="S10" value="8.606378971255952" />
+      <entry key="S30" value="8.865902434854341" />
+      <entry key="S60" value="8.932582481849723" />
+      <entry key="M2" value="8.967572731083674" />
+      <entry key="M5" value="9.48900259444438" />
+      <entry key="M10" value="13.236332789559116" />
+      <entry key="M15" value="17.938091195459513" />
+      <entry key="M30" value="28.415006616518426" />
+      <entry key="H1" value="38.045545891555285" />
+      <entry key="H2" value="44.68885890871196" />
+      <entry key="H4" value="48.611527008560536" />
+      <entry key="D1" value="65.95054210735215" />
+      <entry key="W1" value="407.339126494082" />
+    </decayedShown>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3JuTMYkAQf0ca9d6Xn3VBrL5Wgy" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Go Build.go build github.com/olexandrf/steam-market-web-api/cmd/app.executor&quot;: &quot;Run&quot;,
+    &quot;Go Build.go build steam-wm-api.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GoLinterPluginOnboardingV2&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GoLinterPluginStorageMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GoOptimizationToolWindowEnableInLayout.v333333&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.analysis.ui.options.defaults&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/oleksandr/Documents/GitHub/steam-market-web-api&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/steam/web" />
+      <recent name="$PROJECT_DIR$/steam/market" />
+      <recent name="$PROJECT_DIR$/steam/util" />
+      <recent name="$PROJECT_DIR$/cmd/app" />
+      <recent name="$PROJECT_DIR$/pkg" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build github.com/olexandrf/steam-market-web-api/cmd/app">
+    <configuration name="go build github.com/olexandrf/steam-market-web-api/cmd/app" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="steam-market-web-api" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/olexandrf/steam-market-web-api/cmd/app" />
+      <directory value="$PROJECT_DIR$" />
+      <auto_managed_config_id value="$PROJECT_DIR$/cmd/app" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build steam-wm-api" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="steam-market-web-api" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/olexandrf/steam-market-web-api" />
+      <directory value="$PROJECT_DIR$" />
+      <auto_managed_config_id value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-63c95d513abe-5dee7d74d864-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-263.6259.35" />
+        <option value="bundled-js-predefined-d6986cc7102b-a50aca56a434-JavaScript-GO-263.6259.35" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e521c051-5cfb-4001-846d-b7bb7dd1904f" name="Changes" comment="" />
+      <created>1790509905703</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1790509905703</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Init repository;" />
+    <MESSAGE value="add .gitignore;" />
+    <MESSAGE value="code review update; updated const blocks; fixed naming;" />
+    <MESSAGE value="add example for steam achievements;" />
+    <MESSAGE value="add client timeout and context timeout tests;" />
+    <MESSAGE value="update go.mod;" />
+    <MESSAGE value="update naming;" />
+    <MESSAGE value="ignore errors warnings;" />
+    <MESSAGE value="add LICENSE.md, README.md files;" />
+    <MESSAGE value="update package structure;" />
+    <MESSAGE value="naming;" />
+    <MESSAGE value="error handle;" />
+    <option name="LAST_COMMIT_MESSAGE" value="error handle;" />
+  </component>
+</project>
