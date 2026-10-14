@@ -5,13 +5,15 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 const (
-	MarketURL     = "https://steamcommunity.com/market"
-	MarketListURL = "/search/render"
-	PriceURL      = "/priceoverview"
-	noRender      = "1"
+	MarketURL      = "https://steamcommunity.com/market"
+	MarketListURL  = "/search/render"
+	PriceURL       = "/priceoverview"
+	SaleHistoryURL = "/listings"
+	NoRender       = "1"
 )
 
 type MarketClient struct {
@@ -78,10 +80,15 @@ func NewMarketClient(httpClient *http.Client, url string) *MarketClient {
 	return &MarketClient{Client: httpClient, url: url}
 }
 
-func (s *MarketClient) GetMarketList(ctx context.Context, appid string) (*ItemsList, error) {
+func (s *MarketClient) GetMarketList(ctx context.Context, appid int, query, sortColumn, sortDir string, start, count int) (*ItemsList, error) {
 	params := url.Values{}
-	params.Set("norender", noRender)
-	params.Set("appid", appid)
+	params.Set("norender", NoRender)
+	params.Set("appid", strconv.Itoa(appid))
+	params.Set("query", query)
+	params.Set("sortColumn", sortColumn)
+	params.Set("sortDir", sortDir)
+	params.Set("start", strconv.Itoa(start))
+	params.Set("count", strconv.Itoa(count))
 
 	reqURL, err := buildURL(s.url, MarketListURL, params)
 	if err != nil {
@@ -121,4 +128,42 @@ func (s *MarketClient) GetPrices(ctx context.Context, appid string, currency str
 	}
 
 	return price, nil
+}
+
+// GetSaleHistory
+// start (integer): Pagination start index for active listings (e.g., 0).
+//
+// count (integer): Number of listings to return (e.g., 10, 100).
+//
+// currency (integer): The numeric currency ID (e.g., 1 for USD, 3 for EUR, 5 for GBP).
+//
+// language (string): Language code for text localizations (e.g., english, german, russian).
+//
+// format (string): Response format, typically set to json.
+// /**
+func (s *MarketClient) GetSaleHistory(ctx context.Context, appid int, itemName, language string, currency, start, count int) {
+	params := url.Values{}
+	params.Set("language", language)
+	params.Set("currency", strconv.Itoa(currency))
+	params.Set("start", strconv.Itoa(start))
+	params.Set("count", strconv.Itoa(count))
+	uri, err := url.JoinPath(SaleHistoryURL, url.PathEscape(strconv.Itoa(appid)), url.PathEscape(itemName))
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+		return
+	}
+	reqURL, err := buildURL(MarketURL, uri, params)
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+		return
+	}
+
+	result, err := doRequest(ctx, s.Client, reqURL)
+
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+		return
+	}
+
+	fmt.Printf("%+v\n", string(result))
 }

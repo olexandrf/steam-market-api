@@ -18,7 +18,7 @@ const (
 func buildURL(base string, apiPath string, params url.Values) (string, error) {
 	u, err := url.Parse(base)
 	if err != nil {
-		return "", fmt.Errorf("parse url: %w", err)
+		return "", &URLError{Err: err}
 	}
 	if apiPath != "" {
 		u = u.JoinPath(apiPath)
@@ -57,10 +57,10 @@ func doJSON[T any](ctx context.Context, client *http.Client, rawURL string) (*T,
 		return nil, err
 	}
 
-	return ParseJSONResponse[T](respBody)
+	return parseJsonResponse[T](respBody)
 }
 
-func ParseJSONResponse[T any](body []byte) (*T, error) {
+func parseJsonResponse[T any](body []byte) (*T, error) {
 	var v T
 	if err := json.Unmarshal(body, &v); err != nil {
 		return nil, fmt.Errorf("decode json: %w", err)
