@@ -13,7 +13,7 @@ Requires Go 1.18 or later.
 ## Quick start
 
 ```go
-client := steam.NewMarketClient(nil, steam.MarketURL)
+client := steam.NewMarketClient(steam.MarketURL, nil)
 
 prices, err := client.GetPrices(ctx, "730", 1, "AK-47 | Redline (Field-Tested)")
 if err != nil {
@@ -22,7 +22,7 @@ if err != nil {
 fmt.Println(prices.LowestPrice)
 ```
 
-`NewMarketClient(nil, ...)` creates an HTTP client with a five-second timeout. Pass your own `*http.Client` to configure transport, timeout, or cookies.
+`NewMarketClient(steam.MarketURL, ...})` creates an HTTP client with a five-second timeout. Pass your own `*http.Client` to configure transport, timeout, or cookies.
 
 ## API
 
