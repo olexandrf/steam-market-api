@@ -1,35 +1,39 @@
 package main
 
 import (
-	"github.com/olexandrf/steam-market-web-api/steam"
+	"context"
+	"fmt"
+	"log"
+
+	"github.com/olexandrf/steam-market-api/steam"
 )
 
 func main() {
 	client := steam.NewMarketClient(nil, steam.MarketURL)
-	//list, err := client.GetMarketList(
-	//	context.Background(),
-	//	steam.CS2ID,
-	//	"MP9 | Starlight Protector",
-	//	"default",
-	//	"asc",
-	//	0,
-	//	100,
-	//)
-	//if err != nil {
-	//	log.Fatalf("%+v\n", err)
-	//}
-	//fmt.Printf("%+v\n", list)
+	list, err := client.GetMarketList(
+		context.Background(),
+		steam.CS2ID,
+		"MP9 | Starlight Protector",
+		"default",
+		"asc",
+		0,
+		100,
+	)
+	if err != nil {
+		log.Fatalf("%+v\n", err)
+	}
+	fmt.Printf("%+v\n", list)
 
 	// json:
 	// &{Success:true Start:0 PageSize:10 TotalCount:10 SearchData:{Query:MP9 | Starlight Protector TotalCount:10 PageSize:10 Prefix:searchResults ClassPrefix:market} Results:[{Name:MP9 | Starlight Protector (Field-Tested) HashName:MP9 | Starlight Protector (Field-Tested) SellListings:321 SellPrice:7722 SellPriceText:$77.22 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993039330 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF7teVgWiT9wU0htTjWnI2qcHvEZgQlW5VyROAD50W6lYDnN-zi5QyM2YtGzir43zQJsHh8IziyOQ Tradable:1 Name:MP9 | Starlight Protector (Field-Tested) NameColor:eb4b4b Type:Covert SMG MarketName:MP9 | Starlight Protector (Field-Tested) MarketHashName:MP9 | Starlight Protector (Field-Tested) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$73.87} {Name:StatTrak™ MP9 | Starlight Protector (Minimal Wear) HashName:StatTrak™ MP9 | Starlight Protector (Minimal Wear) SellListings:65 SellPrice:8234 SellPriceText:$82.34 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993045850 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF6ueZhW2flkUtztz_SzYypJSqRalUhDJNwQO4PsBXtx9HkN-K37w3bgohGmHn3kGoXuZ3lRdvF Tradable:1 Name:StatTrak™ MP9 | Starlight Protector (Minimal Wear) NameColor:eb4b4b Type:StatTrak™ Covert SMG MarketName:StatTrak™ MP9 | Starlight Protector (Minimal Wear) MarketHashName:StatTrak™ MP9 | Starlight Protector (Minimal Wear) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$78.76} {Name:MP9 | Starlight Protector (Battle-Scarred) HashName:MP9 | Starlight Protector (Battle-Scarred) SellListings:128 SellPrice:7718 SellPriceText:$77.18 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993038720 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF-teB_VmewkE5y5mSDntn8dy-RZgF1WZp0F-Fb5kXrxoW2MO_ltVeK2I9GxH32kGoXuZvQNNmc Tradable:1 Name:MP9 | Starlight Protector (Battle-Scarred) NameColor:eb4b4b Type:Covert SMG MarketName:MP9 | Starlight Protector (Battle-Scarred) MarketHashName:MP9 | Starlight Protector (Battle-Scarred) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$73.83} {Name:StatTrak™ MP9 | Starlight Protector (Factory New) HashName:StatTrak™ MP9 | Starlight Protector (Factory New) SellListings:26 SellPrice:12150 SellPriceText:$121.50 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993046832 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF6ueZhW2flkUtztz_SzYypJSqRalUhDJNwQO4PsBXtx9HkN-K37w3bgohGmHn3kGoXuZ3lRdvF Tradable:1 Name:StatTrak™ MP9 | Starlight Protector (Factory New) NameColor:eb4b4b Type:StatTrak™ Covert SMG MarketName:StatTrak™ MP9 | Starlight Protector (Factory New) MarketHashName:StatTrak™ MP9 | Starlight Protector (Factory New) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$116.22} {Name:MP9 | Starlight Protector (Well-Worn) HashName:MP9 | Starlight Protector (Well-Worn) SellListings:27 SellPrice:7999 SellPriceText:$79.99 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993040431 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF7teVgWiT9wU0htTjWnI2qcHvEZgQlW5VyROAD50W6lYDnN-zi5QyM2YtGzir43zQJsHh8IziyOQ Tradable:1 Name:MP9 | Starlight Protector (Well-Worn) NameColor:eb4b4b Type:Covert SMG MarketName:MP9 | Starlight Protector (Well-Worn) MarketHashName:MP9 | Starlight Protector (Well-Worn) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$76.52} {Name:StatTrak™ MP9 | Starlight Protector (Battle-Scarred) HashName:StatTrak™ MP9 | Starlight Protector (Battle-Scarred) SellListings:44 SellPrice:7798 SellPriceText:$77.98 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993043972 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF-teB_VmewkE5y5mSDntn8dy-RZgF1WZp0F-Fb5kXrxoW2MO_ltVeK2I9GxH32kGoXuZvQNNmc Tradable:1 Name:StatTrak™ MP9 | Starlight Protector (Battle-Scarred) NameColor:eb4b4b Type:StatTrak™ Covert SMG MarketName:StatTrak™ MP9 | Starlight Protector (Battle-Scarred) MarketHashName:StatTrak™ MP9 | Starlight Protector (Battle-Scarred) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$74.59} {Name:StatTrak™ MP9 | Starlight Protector (Well-Worn) HashName:StatTrak™ MP9 | Starlight Protector (Well-Worn) SellListings:23 SellPrice:7940 SellPriceText:$79.40 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993044301 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF7teVgWiT9wU0htTjWnI2qcHvEZgQlW5VyROAD50W6lYDnN-zi5QyM2YtGzir43zQJsHh8IziyOQ Tradable:1 Name:StatTrak™ MP9 | Starlight Protector (Well-Worn) NameColor:eb4b4b Type:StatTrak™ Covert SMG MarketName:StatTrak™ MP9 | Starlight Protector (Well-Worn) MarketHashName:StatTrak™ MP9 | Starlight Protector (Well-Worn) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$75.95} {Name:MP9 | Starlight Protector (Factory New) HashName:MP9 | Starlight Protector (Factory New) SellListings:64 SellPrice:12912 SellPriceText:$129.12 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993037427 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF6ueZhW2flkUtztz_SzYypJSqRalUhDJNwQO4PsBXtx9HkN-K37w3bgohGmHn3kGoXuZ3lRdvF Tradable:1 Name:MP9 | Starlight Protector (Factory New) NameColor:eb4b4b Type:Covert SMG MarketName:MP9 | Starlight Protector (Factory New) MarketHashName:MP9 | Starlight Protector (Factory New) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$123.51} {Name:StatTrak™ MP9 | Starlight Protector (Field-Tested) HashName:StatTrak™ MP9 | Starlight Protector (Field-Tested) SellListings:95 SellPrice:7598 SellPriceText:$75.98 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993040590 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF7teVgWiT9wU0htTjWnI2qcHvEZgQlW5VyROAD50W6lYDnN-zi5QyM2YtGzir43zQJsHh8IziyOQ Tradable:1 Name:StatTrak™ MP9 | Starlight Protector (Field-Tested) NameColor:eb4b4b Type:StatTrak™ Covert SMG MarketName:StatTrak™ MP9 | Starlight Protector (Field-Tested) MarketHashName:StatTrak™ MP9 | Starlight Protector (Field-Tested) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$72.68} {Name:MP9 | Starlight Protector (Minimal Wear) HashName:MP9 | Starlight Protector (Minimal Wear) SellListings:142 SellPrice:8012 SellPriceText:$80.12 AppIcon:https://shared.fastly.steamstatic.com/community_assets/images/apps/730/8dbc71957312bbd3baea65848b545be9eae2a355.jpg AppName:Counter-Strike 2 AssetDescription:{Appid:730 ClassID:7993037455 BackgroundColor:402d2d IconURL:i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF6ueZhW2flkUtztz_SzYypJSqRalUhDJNwQO4PsBXtx9HkN-K37w3bgohGmHn3kGoXuZ3lRdvF Tradable:1 Name:MP9 | Starlight Protector (Minimal Wear) NameColor:eb4b4b Type:Covert SMG MarketName:MP9 | Starlight Protector (Minimal Wear) MarketHashName:MP9 | Starlight Protector (Minimal Wear) Commodity:0 MarketBucketGroupName:MP9 | Starlight Protector MarketBucketGroupID:G182220EE083004} SalePriceText:$76.64}]}
 
-	//client.GetSaleHistory(
-	//	context.Background(),
-	//	steam.CS2ID,
-	//	"G18072093093004",
-	//	"english",
-	//	1,
-	//	0,
-	//	100,
-	//)
+	client.GetSaleHistory(
+		context.Background(),
+		steam.CS2ID,
+		"G18072093093004",
+		"english",
+		1,
+		0,
+		100,
+	)
 }

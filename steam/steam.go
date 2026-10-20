@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 )
 
@@ -80,6 +81,12 @@ func NewMarketClient(httpClient *http.Client, url string) *MarketClient {
 	return &MarketClient{Client: httpClient, url: url}
 }
 
+// GetMarketList
+// appid (integer): The target game's App ID (e.g., 730).
+//
+// currency (integer): Currency ID (e.g., 1 for USD).
+//
+// market_hash_name (string): The exact URL-encoded market name of the item (e.g., AK-47 | Redline (Field-Tested)).
 func (s *MarketClient) GetMarketList(ctx context.Context, appid int, query, sortColumn, sortDir string, start, count int) (*ItemsList, error) {
 	params := url.Values{}
 	params.Set("norender", NoRender)
@@ -106,10 +113,16 @@ func (s *MarketClient) GetMarketList(ctx context.Context, appid int, query, sort
 	return result, nil
 }
 
-func (s *MarketClient) GetPrices(ctx context.Context, appid string, currency string, marketHashName string) (*PriceOverview, error) {
+// GetPrices
+// appid (integer): The target game's App ID (e.g., 730).
+//
+// currency (integer): Currency ID (e.g., 1 for USD).
+//
+// market_hash_name (string): The exact URL-encoded market name of the item (e.g., AK-47 | Redline (Field-Tested)).
+func (s *MarketClient) GetPrices(ctx context.Context, appid string, currency int, marketHashName string) (*PriceOverview, error) {
 	params := url.Values{}
 	params.Set("appid", appid)
-	params.Set("currency", currency)
+	params.Set("currency", strconv.Itoa(currency))
 	params.Set("market_hash_name", marketHashName)
 
 	reqURL, err := buildURL(s.url, PriceURL, params)
@@ -140,13 +153,14 @@ func (s *MarketClient) GetPrices(ctx context.Context, appid string, currency str
 // language (string): Language code for text localizations (e.g., english, german, russian).
 //
 // format (string): Response format, typically set to json.
-// /**
+// TODO: parse big response into sections
 func (s *MarketClient) GetSaleHistory(ctx context.Context, appid int, itemName, language string, currency, start, count int) {
 	params := url.Values{}
 	params.Set("language", language)
 	params.Set("currency", strconv.Itoa(currency))
 	params.Set("start", strconv.Itoa(start))
 	params.Set("count", strconv.Itoa(count))
+	params.Set("norender", NoRender)
 	uri, err := url.JoinPath(SaleHistoryURL, url.PathEscape(strconv.Itoa(appid)), url.PathEscape(itemName))
 	if err != nil {
 		fmt.Printf("%+v\n", err)
@@ -165,5 +179,10 @@ func (s *MarketClient) GetSaleHistory(ctx context.Context, appid int, itemName, 
 		return
 	}
 
-	fmt.Printf("%+v\n", string(result))
+	out, err := os.Create("test.txt")
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+	}
+	defer out.Close()
+	out.Write(result)
 }

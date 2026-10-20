@@ -1,3 +1,3 @@
-module github.com/olexandrf/steam-market-web-api
+module github.com/olexandrf/steam-market-api
 
-go 1.26
+go 1.18

@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strconv"
 
-	"github.com/olexandrf/steam-market-web-api/steam"
+	"github.com/olexandrf/steam-market-api/steam"
 )
 
 func ExampleMarketClient_GetPrices() {
 	SteamMarketClient := steam.NewMarketClient(nil, steam.MarketURL)
-	steamPriceOverview, err := SteamMarketClient.GetPrices(context.Background(), steam.CS2ID, "1", "AK-47 | Redline (Field-Tested)")
+	steamPriceOverview, err := SteamMarketClient.GetPrices(context.Background(), strconv.Itoa(steam.CS2ID), "1", "AK-47 | Redline (Field-Tested)")
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
