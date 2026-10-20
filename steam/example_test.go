@@ -8,7 +8,7 @@ import (
 )
 
 func ExampleMarketClient_GetPrices() {
-	client := steam.NewMarketClient(nil, steam.MarketURL)
+	client := steam.NewMarketClient(steam.MarketURL, nil)
 	price, err := client.GetPrices(context.Background(), "730", 1, "AK-47 | Redline (Field-Tested)")
 	if err != nil {
 		return
@@ -17,7 +17,7 @@ func ExampleMarketClient_GetPrices() {
 }
 
 func ExampleMarketClient_GetMarketList() {
-	client := steam.NewMarketClient(nil, steam.MarketURL)
+	client := steam.NewMarketClient(steam.MarketURL, nil)
 	items, err := client.GetMarketList(context.Background(), steam.CS2ID, "AK-47", "name", "asc", 0, 10)
 	if err != nil {
 		return
@@ -26,7 +26,7 @@ func ExampleMarketClient_GetMarketList() {
 }
 
 func ExampleMarketClient_GetSaleHistory() {
-	client := steam.NewMarketClient(nil, steam.MarketURL)
+	client := steam.NewMarketClient(steam.MarketURL, nil)
 	history, err := client.GetSaleHistory(context.Background(), steam.CS2ID, "AK-47 | Redline (Field-Tested)", "english", 1, 0, 10)
 	if err != nil {
 		return

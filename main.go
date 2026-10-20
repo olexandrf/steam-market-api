@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	client := steam.NewMarketClient(nil, steam.MarketURL)
+	client := steam.NewMarketClient(steam.MarketURL, nil)
 
 	// itemName must be the Steam Market hash name, not an asset ID or a listing ID.
 	history, err := client.GetSaleHistory(

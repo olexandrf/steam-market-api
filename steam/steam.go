@@ -93,7 +93,7 @@ type PriceOverview struct {
 	MedianPrice string `json:"median_price"`
 }
 
-func NewMarketClient(httpClient *http.Client, url string) *MarketClient {
+func NewMarketClient(url string, httpClient *http.Client) *MarketClient {
 	if httpClient == nil {
 		httpClient = &http.Client{Timeout: DefaultTimeout}
 	}

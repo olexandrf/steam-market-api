@@ -8,7 +8,25 @@ import (
 	"net/url"
 	"strings"
 	"testing"
+	"time"
 )
+
+func TestMarketClient_GetPricesTimeoutByContext(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		<-r.Context().Done()
+	}))
+	defer srv.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
+	defer cancel()
+	_, err := NewMarketClient(srv.URL, srv.Client()).GetPrices(ctx, "testid", 1, "test")
+	if err == nil {
+		t.Fatalf("expected timeout error")
+	}
+	if !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("expected DeadlineExceeded error")
+	}
+}
 
 func TestMarketClient_GetMarketList(t *testing.T) {
 	srv := jsonServer(t, `{"success":true,"total_count":2,"results":[{"name":"AK-47"},{"name":"M4A1-S"}]}`, func(r *http.Request) {
@@ -20,7 +38,7 @@ func TestMarketClient_GetMarketList(t *testing.T) {
 			t.Errorf("unexpected query: %s", got)
 		}
 	})
-	items, err := NewMarketClient(srv.Client(), srv.URL).GetMarketList(context.Background(), CS2ID, "rifle", "name", "asc", 0, 10)
+	items, err := NewMarketClient(srv.URL, srv.Client()).GetMarketList(context.Background(), CS2ID, "rifle", "name", "asc", 0, 10)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,7 +57,7 @@ func TestMarketClient_GetPrices(t *testing.T) {
 			t.Errorf("unexpected query: %s", got)
 		}
 	})
-	price, err := NewMarketClient(srv.Client(), srv.URL).GetPrices(context.Background(), "730", 1, "AK-47 | Redline")
+	price, err := NewMarketClient(srv.URL, srv.Client()).GetPrices(context.Background(), "730", 1, "AK-47 | Redline")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -63,7 +81,7 @@ var g_rgAssets = {"730":{"2":{"456":{"name":"AK-47 | Redline"}}}};
 			t.Errorf("unexpected query: %s", got)
 		}
 	})
-	history, err := NewMarketClient(srv.Client(), srv.URL).GetSaleHistory(context.Background(), CS2ID, "AK-47 | Redline", "english", 1, 0, 10)
+	history, err := NewMarketClient(srv.URL, srv.Client()).GetSaleHistory(context.Background(), CS2ID, "AK-47 | Redline", "english", 1, 0, 10)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -80,7 +98,7 @@ func TestMarketClient_RequestErrors(t *testing.T) {
 				_, _ = w.Write([]byte("unavailable"))
 			}))
 			defer srv.Close()
-			_, err := NewMarketClient(srv.Client(), srv.URL).GetPrices(context.Background(), "730", 1, "item")
+			_, err := NewMarketClient(srv.URL, srv.Client()).GetPrices(context.Background(), "730", 1, "item")
 			var apiErr *APIError
 			if !errors.As(err, &apiErr) || apiErr.StatusCode != status {
 				t.Fatalf("error = %v, want APIError status %d", err, status)
@@ -106,7 +124,7 @@ func TestMarketClient_InvalidResponses(t *testing.T) {
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			srv := jsonServer(t, test.body, nil)
-			if err := test.call(NewMarketClient(srv.Client(), srv.URL)); err == nil {
+			if err := test.call(NewMarketClient(srv.URL, srv.Client())); err == nil {
 				t.Fatal("expected an error")
 			}
 		})
