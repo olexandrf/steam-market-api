@@ -8,6 +8,8 @@ A small Go client for Steam Community Market search, price-overview, and listing
 go get github.com/olexandrf/steam-market-api
 ```
 
+Requires Go 1.18 or later.
+
 ## Quick start
 
 ```go
@@ -62,6 +64,12 @@ Non-200 responses are returned as `*steam.APIError`, including the HTTP status a
 ```bash
 go test ./...
 ```
+
+## Educational-use notice
+
+This is an educational project, not an official Valve or Steam product. It demonstrates how a client can request Steam Market endpoints and parse the public HTML data embedded in listing pages; it is not a complete or production-ready Steam parser.
+
+Use of Steam is governed by Valve's current terms and any applicable rules. This project does not grant permission to automate, scrape, or use Steam Market data in a particular way, and it makes no claim that a given use complies with those terms. Review the [Steam Subscriber Agreement](https://store.steampowered.com/subscriber_agreement/) and obtain any required authorization before using it.
 
 ## License
 
