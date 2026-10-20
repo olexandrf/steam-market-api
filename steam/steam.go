@@ -2,10 +2,10 @@ package steam
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"strconv"
 )
 
@@ -67,6 +67,25 @@ type ItemsList struct {
 	Results    []ResultItem `json:"results"`
 }
 
+// PriceHistoryEntry is one aggregated Steam Market sale data point. Price and
+// Quantity are strings because Steam returns them as strings and the price can
+// use a locale-specific decimal separator.
+type PriceHistoryEntry struct {
+	Date     string
+	Price    string
+	Quantity string
+}
+
+// SaleHistory contains the data embedded in a market listing page. Steam
+// serves this endpoint as HTML, with the useful data assigned to JavaScript
+// variables. ListingInfo and Assets retain Steam's original JSON shape so the
+// client does not discard item-specific fields.
+type SaleHistory struct {
+	PriceHistory []PriceHistoryEntry
+	ListingInfo  map[string]json.RawMessage
+	Assets       map[string]json.RawMessage
+}
+
 type PriceOverview struct {
 	Success     bool   `json:"success"`
 	LowestPrice string `json:"lowest_price"`
@@ -81,12 +100,7 @@ func NewMarketClient(httpClient *http.Client, url string) *MarketClient {
 	return &MarketClient{Client: httpClient, url: url}
 }
 
-// GetMarketList
-// appid (integer): The target game's App ID (e.g., 730).
-//
-// currency (integer): Currency ID (e.g., 1 for USD).
-//
-// market_hash_name (string): The exact URL-encoded market name of the item (e.g., AK-47 | Redline (Field-Tested)).
+// GetMarketList returns one page of searchable Steam Market items.
 func (s *MarketClient) GetMarketList(ctx context.Context, appid int, query, sortColumn, sortDir string, start, count int) (*ItemsList, error) {
 	params := url.Values{}
 	params.Set("norender", NoRender)
@@ -113,12 +127,7 @@ func (s *MarketClient) GetMarketList(ctx context.Context, appid int, query, sort
 	return result, nil
 }
 
-// GetPrices
-// appid (integer): The target game's App ID (e.g., 730).
-//
-// currency (integer): Currency ID (e.g., 1 for USD).
-//
-// market_hash_name (string): The exact URL-encoded market name of the item (e.g., AK-47 | Redline (Field-Tested)).
+// GetPrices returns the current price overview for a market item.
 func (s *MarketClient) GetPrices(ctx context.Context, appid string, currency int, marketHashName string) (*PriceOverview, error) {
 	params := url.Values{}
 	params.Set("appid", appid)
@@ -143,18 +152,11 @@ func (s *MarketClient) GetPrices(ctx context.Context, appid string, currency int
 	return price, nil
 }
 
-// GetSaleHistory
-// start (integer): Pagination start index for active listings (e.g., 0).
-//
-// count (integer): Number of listings to return (e.g., 10, 100).
-//
-// currency (integer): The numeric currency ID (e.g., 1 for USD, 3 for EUR, 5 for GBP).
-//
-// language (string): Language code for text localizations (e.g., english, german, russian).
-//
-// format (string): Response format, typically set to json.
-// TODO: parse big response into sections
-func (s *MarketClient) GetSaleHistory(ctx context.Context, appid int, itemName, language string, currency, start, count int) {
+// GetSaleHistory returns sale history and listing data from a Steam Market
+// listing page. itemName is the market hash name (for example, "AK-47 | Redline
+// (Field-Tested)"). Steam returns HTML rather than a JSON API response; the
+// embedded price-history, listing, and asset JavaScript variables are parsed.
+func (s *MarketClient) GetSaleHistory(ctx context.Context, appid int, itemName, language string, currency, start, count int) (*SaleHistory, error) {
 	params := url.Values{}
 	params.Set("language", language)
 	params.Set("currency", strconv.Itoa(currency))
@@ -163,26 +165,21 @@ func (s *MarketClient) GetSaleHistory(ctx context.Context, appid int, itemName, 
 	params.Set("norender", NoRender)
 	uri, err := url.JoinPath(SaleHistoryURL, url.PathEscape(strconv.Itoa(appid)), url.PathEscape(itemName))
 	if err != nil {
-		fmt.Printf("%+v\n", err)
-		return
+		return nil, fmt.Errorf("get sale history: build path: %w", err)
 	}
-	reqURL, err := buildURL(MarketURL, uri, params)
+	reqURL, err := buildURL(s.url, uri, params)
 	if err != nil {
-		fmt.Printf("%+v\n", err)
-		return
+		return nil, fmt.Errorf("get sale history: %w", err)
 	}
 
 	result, err := doRequest(ctx, s.Client, reqURL)
-
 	if err != nil {
-		fmt.Printf("%+v\n", err)
-		return
+		return nil, fmt.Errorf("get sale history: %w", err)
 	}
 
-	out, err := os.Create("test.txt")
+	history, err := parseSaleHistory(result)
 	if err != nil {
-		fmt.Printf("%+v\n", err)
+		return nil, fmt.Errorf("get sale history: %w", err)
 	}
-	defer out.Close()
-	out.Write(result)
+	return history, nil
 }

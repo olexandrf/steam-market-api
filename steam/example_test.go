@@ -3,26 +3,35 @@ package steam_test
 import (
 	"context"
 	"fmt"
-	"log"
-	"strconv"
 
 	"github.com/olexandrf/steam-market-api/steam"
 )
 
 func ExampleMarketClient_GetPrices() {
-	SteamMarketClient := steam.NewMarketClient(nil, steam.MarketURL)
-	steamPriceOverview, err := SteamMarketClient.GetPrices(context.Background(), strconv.Itoa(steam.CS2ID), "1", "AK-47 | Redline (Field-Tested)")
+	client := steam.NewMarketClient(nil, steam.MarketURL)
+	price, err := client.GetPrices(context.Background(), "730", 1, "AK-47 | Redline (Field-Tested)")
 	if err != nil {
-		log.Fatalf(err.Error())
+		return
 	}
-	fmt.Printf("%+v\n", steamPriceOverview)
+	fmt.Println(price.LowestPrice)
 }
 
 func ExampleMarketClient_GetMarketList() {
-	SteamMarketClient := steam.NewMarketClient(nil, steam.MarketURL)
-	steamMarketResponse, err := SteamMarketClient.GetMarketList(context.Background(), steam.CS2ID)
+	client := steam.NewMarketClient(nil, steam.MarketURL)
+	items, err := client.GetMarketList(context.Background(), steam.CS2ID, "AK-47", "name", "asc", 0, 10)
 	if err != nil {
-		log.Fatalf(err.Error())
+		return
 	}
-	fmt.Printf("%+v\n", steamMarketResponse)
+	fmt.Println(items.TotalCount)
+}
+
+func ExampleMarketClient_GetSaleHistory() {
+	client := steam.NewMarketClient(nil, steam.MarketURL)
+	history, err := client.GetSaleHistory(context.Background(), steam.CS2ID, "AK-47 | Redline (Field-Tested)", "english", 1, 0, 10)
+	if err != nil {
+		return
+	}
+	for _, point := range history.PriceHistory {
+		fmt.Printf("%s: %s (%s sales)\n", point.Date, point.Price, point.Quantity)
+	}
 }
